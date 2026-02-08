@@ -61,9 +61,11 @@ public class RegisterFragment extends Fragment implements RegisterView {
 
     public void onRegister(){
         signUp.setOnClickListener(v->{
+            String username = usernameEt.getText().toString();
             String email = emailEt.getText().toString();
             String password = passwordEt.getText().toString();
-            presenter.registerWithEmailAndPassword(email, password);
+            String confirmPassword = confirmPasswordEt.getText().toString();
+            presenter.registerWithEmailAndPassword(username, email, password, confirmPassword);
         });
     }
 

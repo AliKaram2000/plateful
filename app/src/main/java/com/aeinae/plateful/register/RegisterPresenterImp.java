@@ -1,5 +1,7 @@
 package com.aeinae.plateful.register;
 
+import android.util.Patterns;
+
 import com.aeinae.plateful.model.authentication.AuthenticationService;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -18,7 +20,9 @@ public class RegisterPresenterImp implements RegisterPresenter {
     }
 
     @Override
-    public void registerWithEmailAndPassword(String email, String password) {
+    public void registerWithEmailAndPassword(String username, String email, String password, String confirmPassword) {
+        boolean isValid = validateCredentials(username,email,password,confirmPassword);
+        if(!isValid){return;}
         Disposable disposable = authServ.registerWithEmailAndPassword(email,password)
                 .subscribeOn(
                         Schedulers.io()
@@ -35,5 +39,24 @@ public class RegisterPresenterImp implements RegisterPresenter {
                 }
         );
         compositeDisposable.add(disposable);
+    }
+    boolean validateCredentials(String username, String email, String password, String confirmPassword){
+        if (username.trim().length() < 3) {
+            view.showErrorMessage("Username is too short");
+            return false;
+        }
+        if (email == null || email.trim().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()) {
+            view.showErrorMessage("Invalid email");
+            return false;
+        }
+        if (password == null || password.isEmpty() || password.length() < 8) {
+            view.showErrorMessage("Your password is weak, please enter a stronger password");
+            return false;
+        }
+        if(!password.equals(confirmPassword)){
+            view.showErrorMessage("Passwords do not match");
+            return false;
+        }
+        return true;
     }
 }

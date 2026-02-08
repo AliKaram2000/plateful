@@ -1,5 +1,7 @@
 package com.aeinae.plateful.login;
 
+import android.util.Patterns;
+
 import com.aeinae.plateful.model.authentication.AuthenticationService;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -16,6 +18,8 @@ public class LoginPresenterImp implements LoginPresenter{
 
     @Override
     public void loginWithEmailAndPassword(String email, String password) {
+        boolean isValid = validateCredentials(email, password);
+        if(!isValid){return;}
         Disposable disposable = authServ.loginWithEmailAndPassword(email,password)
                 .subscribeOn(
                         Schedulers.io()
@@ -32,5 +36,17 @@ public class LoginPresenterImp implements LoginPresenter{
                         }
                 );
         compositeDisposable.add(disposable);
+    }
+
+    boolean validateCredentials(String email, String password){
+        if (email == null || email.trim().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()) {
+            view.showErrorMessage("Invalid email");
+            return false;
+        }
+        if (password == null || password.isEmpty() || password.length() < 8) {
+            view.showErrorMessage("Invalid password");
+            return false;
+        }
+        return true;
     }
 }
