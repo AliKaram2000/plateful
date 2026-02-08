@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.aeinae.plateful" />
+                  <option name="mobileSdkAppId" value="1:254140398200:android:4d573d236750fe58814b8d" />
+                  <option name="projectId" value="plateful-893d3" />
+                  <option name="projectNumber" value="254140398200" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

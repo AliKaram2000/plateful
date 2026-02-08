@@ -9,6 +9,11 @@ activity = "1.12.3"
 constraintlayout = "2.2.1"
 fragment = "1.8.9"
 navigation = "2.9.7"
+firebaseBom = "34.8.0"
+credentials = "1.5.0"
+googleid = "1.2.0"
+rxandroid = "3.0.2"
+rxjava = "3.1.12"
 
 
 [libraries]
@@ -23,7 +28,17 @@ fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
 navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
 navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
 navigation-safe-args-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+
+
 

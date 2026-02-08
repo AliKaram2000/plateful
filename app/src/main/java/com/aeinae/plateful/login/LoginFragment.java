@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +14,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aeinae.plateful.R;
+import com.aeinae.plateful.model.authentication.AuthenticationService;
 
 
 public class LoginFragment extends Fragment implements LoginView {
 
     Button login, googleLogin;
-    EditText email, password;
+    EditText emailEt, passwordEt;
     TextView signUp;
     LoginPresenter presenter;
 
@@ -39,15 +43,44 @@ public class LoginFragment extends Fragment implements LoginView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
+        onLogin();
+        onRegister();
     }
 
     public void initUI(View view){
         signUp = view.findViewById(R.id.tv_signup);
-        email = view.findViewById(R.id.et_input_email);
-        password = view.findViewById(R.id.et_input_pw);
+        emailEt = view.findViewById(R.id.et_input_email);
+        passwordEt = view.findViewById(R.id.et_input_pw);
         login = view.findViewById(R.id.btn_login);
         googleLogin = view.findViewById(R.id.btn_login_with_google);
-        presenter = new LoginPresenterImp(this);
+        presenter = new LoginPresenterImp(this, new AuthenticationService());
     }
 
+    public void onLogin(){
+        login.setOnClickListener(v->{
+            String email = emailEt.getText().toString();
+            String password = passwordEt.getText().toString();
+            presenter.loginWithEmailAndPassword(email, password);
+        });
+    }
+
+    public void onRegister(){
+        signUp.setOnClickListener(v->{
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(R.id.action_loginFragment_to_registerFragment);
+        });
+    }
+    @Override
+    public void navigateToHomeScreen() {
+
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.action_loginFragment_to_homeActivity);
+        requireActivity().finish();
+
+    }
+
+    @Override
+    public void showErrorMessage(String localizedMessage) {
+        Toast.makeText(requireContext(), localizedMessage, Toast.LENGTH_SHORT).show();
+    }
 }
