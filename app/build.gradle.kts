@@ -1,15 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("androidx.navigation.safeargs")
 }
 
 android {
     namespace = "com.aeinae.plateful"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.aeinae.plateful"
-        minSdk = 31
-        targetSdk = 35
+        minSdk = 26
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -40,4 +41,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.fragment)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+
 }
