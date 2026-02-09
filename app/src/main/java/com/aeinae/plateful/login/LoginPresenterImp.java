@@ -38,6 +38,29 @@ public class LoginPresenterImp implements LoginPresenter{
         compositeDisposable.add(disposable);
     }
 
+    @Override
+    public void loginWithGoogle() {
+        Disposable disposable = view.getGoogleCredentials()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .flatMap(
+                credential -> {
+                    return authServ.loginWithGoogle(credential);
+                })
+                .observeOn(
+                        AndroidSchedulers.mainThread()
+                )
+                .subscribe(
+                        isSuccess -> {
+                            view.navigateToHomeScreen();
+                        },
+                        onError -> {
+                            view.showErrorMessage(onError.getLocalizedMessage());
+                        });
+        compositeDisposable.add(disposable);
+
+    }
+
     boolean validateCredentials(String email, String password){
         if (email == null || email.trim().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()) {
             view.showErrorMessage("Invalid email");

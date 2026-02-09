@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "254140398200-3cm86g0ke4a49fe8i52h862gl5uee4bv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aeinae.plateful",
+            "certificate_hash": "66d6250cfa3b805aad91fd8f42af3b100d131da7"
+          }
+        },
+        {
           "client_id": "254140398200-bcdnirlmenssuvkojam9e2dd0ijhaeur.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,9 +1,9 @@
 package com.aeinae.plateful.login;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.credentials.Credential;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -16,8 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aeinae.plateful.MainActivity;
 import com.aeinae.plateful.R;
 import com.aeinae.plateful.model.authentication.AuthenticationService;
+
+import io.reactivex.rxjava3.core.Single;
 
 
 public class LoginFragment extends Fragment implements LoginView {
@@ -45,6 +48,7 @@ public class LoginFragment extends Fragment implements LoginView {
         initUI(view);
         onLogin();
         onRegister();
+        onGoogleLogin();
     }
 
     public void initUI(View view){
@@ -69,6 +73,17 @@ public class LoginFragment extends Fragment implements LoginView {
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(R.id.action_loginFragment_to_registerFragment);
         });
+    }
+
+    @Override
+    public Single<Credential> getGoogleCredentials(){
+        return ((MainActivity) requireActivity()).launchCredentialManager();
+    }
+    public void onGoogleLogin(){
+        googleLogin.setOnClickListener(
+                view -> {
+                    presenter.loginWithGoogle();
+                });
     }
     @Override
     public void navigateToHomeScreen() {

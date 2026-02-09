@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.credentials.Credential;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -16,8 +17,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aeinae.plateful.MainActivity;
 import com.aeinae.plateful.R;
 import com.aeinae.plateful.model.authentication.AuthenticationService;
+
+import io.reactivex.rxjava3.core.Single;
 
 
 public class RegisterFragment extends Fragment implements RegisterView {
@@ -46,6 +50,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
         initUI(view);
         onRegister();
         onLogin();
+        onGoogleLogin();
     }
 
     public void initUI(View view){
@@ -76,6 +81,16 @@ public class RegisterFragment extends Fragment implements RegisterView {
         });
     }
 
+    @Override
+    public Single<Credential> getGoogleCredentials(){
+        return ((MainActivity) requireActivity()).launchCredentialManager();
+    }
+    public void onGoogleLogin(){
+        googleSignUp.setOnClickListener(
+                view -> {
+                    presenter.loginWithGoogle();
+                });
+    }
     @Override
     public void navigateToHomeScreen() {
 
