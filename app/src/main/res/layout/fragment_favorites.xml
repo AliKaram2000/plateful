@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".favorites.FavoritesFragment">
+    android:padding="12dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Label -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/label_favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Favourites:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_marginBottom="12dp"/>
 
-</FrameLayout>
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favourites_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        tools:listitem="@layout/item_favorite"
+        />
+</LinearLayout>
