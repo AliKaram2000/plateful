@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
+    implementation(libs.coordinatorlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
