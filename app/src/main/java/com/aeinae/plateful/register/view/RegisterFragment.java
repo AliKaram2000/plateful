@@ -1,6 +1,7 @@
-package com.aeinae.plateful.login;
+package com.aeinae.plateful.register.view;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.credentials.Credential;
@@ -19,59 +20,66 @@ import android.widget.Toast;
 import com.aeinae.plateful.MainActivity;
 import com.aeinae.plateful.R;
 import com.aeinae.plateful.model.authentication.AuthenticationService;
+import com.aeinae.plateful.register.presenter.RegisterPresenter;
+import com.aeinae.plateful.register.presenter.RegisterPresenterImp;
 
 import io.reactivex.rxjava3.core.Single;
 
 
-public class LoginFragment extends Fragment implements LoginView {
+public class RegisterFragment extends Fragment implements RegisterView {
 
-    Button login, googleLogin;
-    EditText emailEt, passwordEt;
-    TextView signUp;
-    LoginPresenter presenter;
+    Button signUp, googleSignUp;
+    EditText usernameEt, emailEt, passwordEt, confirmPasswordEt;
+    TextView login;
+    RegisterPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
-        onLogin();
         onRegister();
+        onLogin();
         onGoogleLogin();
     }
 
     public void initUI(View view){
-        signUp = view.findViewById(R.id.tv_signup);
+        signUp = view.findViewById(R.id.btn_register);
+        googleSignUp = view.findViewById(R.id.btn_register_with_google);
+        usernameEt = view.findViewById(R.id.et_input_username);
         emailEt = view.findViewById(R.id.et_input_email);
         passwordEt = view.findViewById(R.id.et_input_pw);
-        login = view.findViewById(R.id.btn_login);
-        googleLogin = view.findViewById(R.id.btn_login_with_google);
-        presenter = new LoginPresenterImp(this, new AuthenticationService());
-    }
-
-    public void onLogin(){
-        login.setOnClickListener(v->{
-            String email = emailEt.getText().toString();
-            String password = passwordEt.getText().toString();
-            presenter.loginWithEmailAndPassword(email, password);
-        });
+        confirmPasswordEt = view.findViewById(R.id.et_input_confirm_pw);
+        login = view.findViewById(R.id.tv_login);
+        presenter = new RegisterPresenterImp(this,new AuthenticationService());
     }
 
     public void onRegister(){
         signUp.setOnClickListener(v->{
+            String username = usernameEt.getText().toString();
+            String email = emailEt.getText().toString();
+            String password = passwordEt.getText().toString();
+            String confirmPassword = confirmPasswordEt.getText().toString();
+            presenter.registerWithEmailAndPassword(username, email, password, confirmPassword);
+        });
+    }
+
+    public void onLogin(){
+        login.setOnClickListener(v->{
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.action_loginFragment_to_registerFragment);
+            navController.navigate(R.id.action_registerFragment_to_loginFragment);
         });
     }
 
@@ -80,7 +88,7 @@ public class LoginFragment extends Fragment implements LoginView {
         return ((MainActivity) requireActivity()).launchCredentialManager();
     }
     public void onGoogleLogin(){
-        googleLogin.setOnClickListener(
+        googleSignUp.setOnClickListener(
                 view -> {
                     presenter.loginWithGoogle();
                 });
@@ -89,7 +97,7 @@ public class LoginFragment extends Fragment implements LoginView {
     public void navigateToHomeScreen() {
 
         NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_loginFragment_to_homeActivity);
+        navController.navigate(R.id.action_registerFragment_to_homeActivity);
         requireActivity().finish();
 
     }

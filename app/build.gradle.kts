@@ -39,6 +39,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.fragment)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.credentials)
@@ -47,11 +50,17 @@ dependencies {
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
     implementation(libs.coordinatorlayout)
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation (libs.glide)
+    implementation (libs.converter.gson)
+    implementation(libs.adapter.rxjava3)
+    // Lombok dependencies - MUST come before Room compiler
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(libs.fragment)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
+
 
 }

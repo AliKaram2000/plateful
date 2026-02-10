@@ -1,8 +1,9 @@
-package com.aeinae.plateful.register;
+package com.aeinae.plateful.register.presenter;
 
 import android.util.Patterns;
 
 import com.aeinae.plateful.model.authentication.AuthenticationService;
+import com.aeinae.plateful.register.view.RegisterView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

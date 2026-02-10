@@ -1,4 +1,4 @@
-package com.aeinae.plateful.register;
+package com.aeinae.plateful.register.presenter;
 
 
 public interface RegisterPresenter {

@@ -1,4 +1,4 @@
-package com.aeinae.plateful.login;
+package com.aeinae.plateful.login.presenter;
 
 public interface LoginPresenter {
 
