@@ -1,6 +1,5 @@
 package com.aeinae.plateful.home.view;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,11 +17,8 @@ import android.widget.Toast;
 
 import com.aeinae.plateful.R;
 import com.aeinae.plateful.data.meals.model.MealDto;
-import com.aeinae.plateful.data.meals.repository.MealsRepository;
 import com.aeinae.plateful.home.presenter.HomePresenter;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -31,6 +27,8 @@ public class HomeFragment extends Fragment implements HomeView {
     private TextView randomMealTitle;
     private RecyclerView recyclerView;
     HomeMealsAdapter adapter;
+    String ALL_MEALS = "a";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,7 @@ public class HomeFragment extends Fragment implements HomeView {
         presenter.getRandomMeal();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         adapter = new HomeMealsAdapter();
-        presenter.getAllMeals();
+        presenter.getAllMeals(ALL_MEALS);
         recyclerView.setAdapter(adapter);
     }
 
@@ -76,6 +74,6 @@ public class HomeFragment extends Fragment implements HomeView {
     public void bindView(View view){
         randomMealImg = view.findViewById(R.id.randomMealImg);
         randomMealTitle = view.findViewById(R.id.randomMealTitle);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerViewHome);
     }
 }

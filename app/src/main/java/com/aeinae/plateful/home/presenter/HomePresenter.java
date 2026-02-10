@@ -29,9 +29,8 @@ public class HomePresenter {
                     homeView.displayError();
                     });
     }
-    public void getAllMeals(){
-        String ALL_MEALS = "a";
-        Disposable disposable = repo.getAllMeals(ALL_MEALS)
+    public void getAllMeals(String allMeals){
+        Disposable disposable = repo.getAllMeals(allMeals)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

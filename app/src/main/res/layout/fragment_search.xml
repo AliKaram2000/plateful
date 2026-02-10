@@ -16,6 +16,7 @@
         app:iconifiedByDefault="false"
         android:layout_marginBottom="8dp"/>
 
+
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
         android:layout_width="match_parent"
@@ -54,7 +55,7 @@
     </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recyclerViewSearch"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
