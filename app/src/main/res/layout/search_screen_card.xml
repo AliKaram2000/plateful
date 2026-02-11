@@ -19,7 +19,15 @@
             android:layout_height="150dp"
             android:scaleType="centerCrop"
             android:contentDescription="Meal image"/>
-
+        <ImageView
+            android:id="@+id/meal_favorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_favorite"
+            android:contentDescription="Favorite icon"
+            android:paddingTop="4dp"
+            app:tint="@color/light_red" />
         <TextView
             android:id="@+id/meal_name"
             android:layout_width="match_parent"

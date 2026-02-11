@@ -12,15 +12,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aeinae.plateful.R;
 import com.aeinae.plateful.data.meals.model.MealDto;
 import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 public class SearchMealsAdapter extends RecyclerView.Adapter<SearchMealsAdapter.SearchMealsViewHolder> {
     private List<MealDto> meals = List.of();
+    private OnFavoriteSearchMealClickListener onFavoriteSearchMealClickListener;
+    private OnSearchCardClick onSearchCardClick;
+
     public void setMealsList(List<MealDto> meals){
         this.meals = meals;
         notifyDataSetChanged();
     }
+
+    public void setOnFavoriteClickListener(OnFavoriteSearchMealClickListener listener) {
+        this.onFavoriteSearchMealClickListener = listener;
+    }
+    public void setOnSearchItemClickListener(OnSearchCardClick listener) {
+        this.onSearchCardClick = listener;
+    }
+
+
     @NonNull
     @Override
     public SearchMealsAdapter.SearchMealsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,6 +46,14 @@ public class SearchMealsAdapter extends RecyclerView.Adapter<SearchMealsAdapter.
         Glide.with(holder.mealImage)
                 .load(meal.getStrMealThumb())
                 .into(holder.mealImage);
+        holder.mealFavorite.setOnClickListener(v -> {
+            if (onFavoriteSearchMealClickListener != null) {
+                onFavoriteSearchMealClickListener.onFavoriteClicked(meal);
+            }
+        });
+        holder.itemView.setOnClickListener(view -> {
+            onSearchCardClick.onSearchItemClick(meal.getIdMeal());
+        });
     }
 
     @Override
@@ -44,10 +63,13 @@ public class SearchMealsAdapter extends RecyclerView.Adapter<SearchMealsAdapter.
     public static class SearchMealsViewHolder extends RecyclerView.ViewHolder {
         ImageView mealImage;
         TextView mealName;
+        ImageView mealFavorite;
+
         public SearchMealsViewHolder(View itemView) {
             super(itemView);
             mealImage = itemView.findViewById(R.id.meal_image);
             mealName = itemView.findViewById(R.id.meal_name);
+            mealFavorite = itemView.findViewById(R.id.meal_favorite);
         }
     }
 

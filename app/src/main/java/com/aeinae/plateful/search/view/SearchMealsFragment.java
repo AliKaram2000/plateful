@@ -5,6 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.NavHost;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,14 +61,24 @@ public class SearchMealsFragment extends Fragment implements SearchMealsView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bindView(view);
-        SearchPresenter presenter = new SearchPresenter(this);
-       recyclerView.setLayoutManager(
+        SearchPresenter presenter = new SearchPresenter(this, this.requireActivity().getApplication());
+        recyclerView.setLayoutManager(
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         );
         adapter = new SearchMealsAdapter();
         recyclerView.setAdapter(adapter);
         observeSearchEditText(presenter);
         adapter.notifyDataSetChanged();
+        adapter.setOnFavoriteClickListener(meal -> {
+            Toast.makeText(requireContext(),
+                    "Meal added to Favorites: " + meal.getStrMeal(),
+                    Toast.LENGTH_SHORT).show();
+        });
+        adapter.setOnSearchItemClickListener(id->{
+            NavDirections action = SearchMealsFragmentDirections.actionSearchFragmentToDetailsFragment(id);
+            NavController controller = NavHostFragment.findNavController(this);
+            controller.navigate(action);
+        });
     }
     @Override
     public void updateMealsList(List<MealDto> meals) {

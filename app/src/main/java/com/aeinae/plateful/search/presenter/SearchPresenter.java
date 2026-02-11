@@ -1,5 +1,7 @@
 package com.aeinae.plateful.search.presenter;
 
+import android.app.Application;
+
 import com.aeinae.plateful.data.meals.repository.MealsRepository;
 import com.aeinae.plateful.search.view.SearchMealsView;
 
@@ -10,9 +12,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class SearchPresenter {
     MealsRepository repo;
     SearchMealsView searchMealsView;
-    public SearchPresenter(SearchMealsView searchMealsView){
+    public SearchPresenter(SearchMealsView searchMealsView, Application application){
         this.searchMealsView = searchMealsView;
-        repo = new MealsRepository();
+        repo = new MealsRepository(application);
     }
     public void searchAllMeals(String searchMeal){
         Disposable disposable = repo.getAllMeals(searchMeal)

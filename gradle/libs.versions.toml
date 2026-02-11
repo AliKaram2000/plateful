@@ -48,5 +48,3 @@ adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.r
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 
-
-

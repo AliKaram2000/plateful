@@ -58,6 +58,10 @@ dependencies {
     // Lombok dependencies - MUST come before Room compiler
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:13.0.0")
+    implementation("androidx.room:room-runtime:2.8.4")
+    annotationProcessor("androidx.room:room-compiler:2.8.4")
+    implementation ("androidx.room:room-rxjava3:2.8.4")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

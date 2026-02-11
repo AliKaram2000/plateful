@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +29,7 @@ public class HomeFragment extends Fragment implements HomeView {
     private TextView randomMealTitle;
     private RecyclerView recyclerView;
     HomeMealsAdapter adapter;
-    String ALL_MEALS = "a";
+    private static final String ALL_MEALS = "a";
 
 
     @Override
@@ -46,12 +48,23 @@ public class HomeFragment extends Fragment implements HomeView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bindView(view);
-        HomePresenter presenter = new HomePresenter(this);
+        HomePresenter presenter = new HomePresenter(this, this.requireActivity().getApplication());
         presenter.getRandomMeal();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         adapter = new HomeMealsAdapter();
         presenter.getAllMeals(ALL_MEALS);
         recyclerView.setAdapter(adapter);
+        adapter.setOnFavoriteClickListener(meal -> {
+            Toast.makeText(requireContext(),
+                    "Meal added to Favorites: " + meal.getStrMeal(),
+                    Toast.LENGTH_SHORT).show();
+            presenter.insertFavoriteMeal(meal);
+
+        });
+        adapter.setOnHomeCardClickListener(id->{
+            NavDirections action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(id);
+            NavHostFragment.findNavController(this).navigate(action);
+        });
     }
 
     @Override
@@ -60,7 +73,7 @@ public class HomeFragment extends Fragment implements HomeView {
         Glide.with(randomMealImg)
                 .load(mealDto.getStrMealThumb())
                 .into(randomMealImg);
-}
+    }
 
     @Override
     public void updateMealsList(List<MealDto> meals) {

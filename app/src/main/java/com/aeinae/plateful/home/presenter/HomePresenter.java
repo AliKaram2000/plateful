@@ -1,8 +1,11 @@
 package com.aeinae.plateful.home.presenter;
 
+import android.app.Application;
 import android.widget.Toast;
 
+import com.aeinae.plateful.data.meals.mapper.MealMapper;
 import com.aeinae.plateful.data.meals.model.MealDto;
+import com.aeinae.plateful.data.meals.model.MealEntity;
 import com.aeinae.plateful.data.meals.repository.MealsRepository;
 import com.aeinae.plateful.home.view.HomeView;
 
@@ -13,9 +16,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class HomePresenter {
     MealsRepository repo;
     HomeView homeView;
-    public HomePresenter(HomeView homeView) {
+    public HomePresenter(HomeView homeView, Application application) {
         this.homeView = homeView;
-        repo = new MealsRepository();
+        repo = new MealsRepository(application);
     }
 
     public void getRandomMeal(){
@@ -41,6 +44,16 @@ public class HomePresenter {
                             homeView.displayError();
                         }
                 );
+    }
+    public void insertFavoriteMeal(MealDto mealDto){
+        insertMealsLocally(mealDto);
+    }
+    private void insertMealsLocally(MealDto mealDto){
+        MealEntity mealEntity = MealMapper.toEntity(mealDto);
+        repo.insertMeal(mealEntity)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
 }

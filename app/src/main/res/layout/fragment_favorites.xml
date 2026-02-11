@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:padding="12dp">
 
-    <!-- Label -->
     <TextView
         android:id="@+id/label_favourites"
         android:layout_width="wrap_content"
@@ -18,7 +17,6 @@
         android:textColor="@android:color/holo_orange_dark"
         android:layout_marginBottom="12dp"/>
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favourites_recycler_view"
         android:layout_width="match_parent"
