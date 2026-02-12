@@ -66,10 +66,6 @@ public class FavoriteMealsAdapter extends RecyclerView.Adapter<FavoriteMealsAdap
             removeFavorite = itemView.findViewById(R.id.ic_removeFav);
         }
     }
-    public interface OnRemoveFavoriteClickListener {
-        void onRemoveFavorite(MealEntity meal);
-    }
-    public interface OnFavoriteCardClickListener {
-        void onFavoriteCardClick(String mealId);
-    }
+
+
 }

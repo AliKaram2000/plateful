@@ -28,6 +28,9 @@ public class MealsRepository {
     public Single<MealsResponse> getAllMeals(String mealName){
         return rds.getAllMealsResponse(mealName);
     }
+    public Single<MealsResponse> getMealDetails(int mealID){
+        return rds.getMealDetails(mealID);
+    }
     public Completable insertMeal(MealEntity meal){
          return lds.insertMeal(meal);
     }
@@ -38,6 +41,6 @@ public class MealsRepository {
         return lds.getFavoriteMeals();
     }
     public Completable deleteMeal(MealEntity meal){
-        return lds.deleteAllMeals();
+        return lds.deleteMeal(meal);
     }
 }

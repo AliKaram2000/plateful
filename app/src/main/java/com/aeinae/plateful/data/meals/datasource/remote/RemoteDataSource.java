@@ -16,6 +16,8 @@ public class RemoteDataSource {
     public Single<MealsResponse> getAllMealsResponse(String mealName){
         return mealsService.getAllMeals(mealName).onErrorReturnItem(new MealsResponse()); //TODO: Hardcode random meal
     }
-
+    public Single<MealsResponse> getMealDetails(int mealID){
+        return mealsService.getMealDetails(String.valueOf(mealID)).onErrorReturnItem(new MealsResponse());
+    }
 
 }

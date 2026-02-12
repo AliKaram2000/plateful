@@ -33,6 +33,11 @@ public class FavoritesPresenter {
                             Log.d("getfavtest", t.getMessage());
                         }
                         );
-
+    }
+    public void deleteFavoriteMeal(MealEntity meal){
+        repo.deleteMeal(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

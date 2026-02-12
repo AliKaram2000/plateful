@@ -14,4 +14,6 @@ public interface MealsService {
     Single<MealsResponse> getRandomMeal();
     @GET("search.php")
     Single<MealsResponse> getAllMeals(@Query("s") String mealName);
+    @GET("lookup.php")
+    Single<MealsResponse> getMealDetails(@Query("i") String mealID);
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.aeinae.plateful.R;
 import com.aeinae.plateful.data.meals.model.MealEntity;
@@ -51,6 +52,11 @@ public class FavoritesFragment extends Fragment implements FavoritesView {
         adapter = new FavoriteMealsAdapter();
         adapter.setMealsList(meals);
         recyclerView.setAdapter(adapter);
+        adapter.setOnRemoveFavoriteClickListener(meal -> {
+            presenter.deleteFavoriteMeal(meal);
+            Toast.makeText(requireContext(), "Removed "+ meal.getTitle()+ " from favorites", Toast.LENGTH_SHORT).show();
+            presenter.getFavoriteMeals();
+        });
     }
     @Override
     public void onDestroyView() {
