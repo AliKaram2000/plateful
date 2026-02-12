@@ -1,5 +1,6 @@
 package com.aeinae.plateful.search.view;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,10 +21,14 @@ import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 
 import com.aeinae.plateful.R;
+import com.aeinae.plateful.data.meals.model.CategoryDto;
+import com.aeinae.plateful.data.meals.model.CountryDto;
+import com.aeinae.plateful.data.meals.model.IngredientDto;
 import com.aeinae.plateful.data.meals.model.MealDto;
 import com.aeinae.plateful.search.presenter.SearchPresenter;
 import com.google.android.material.chip.Chip;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +44,7 @@ public class SearchMealsFragment extends Fragment implements SearchMealsView {
     private Chip chipCountry;
     private RecyclerView recyclerView;
     private SearchMealsAdapter adapter;
+    private SearchPresenter presenter;
     private String searching;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final PublishSubject<String> searchSubject = PublishSubject.create();
@@ -61,7 +67,7 @@ public class SearchMealsFragment extends Fragment implements SearchMealsView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bindView(view);
-        SearchPresenter presenter = new SearchPresenter(this, this.requireActivity().getApplication());
+        presenter = new SearchPresenter(this, this.requireActivity().getApplication());
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         );
@@ -73,12 +79,16 @@ public class SearchMealsFragment extends Fragment implements SearchMealsView {
             Toast.makeText(requireContext(),
                     "Meal added to Favorites: " + meal.getStrMeal(),
                     Toast.LENGTH_SHORT).show();
+            presenter.insertFavoriteMeal(meal);
         });
         adapter.setOnSearchItemClickListener(id->{
             NavDirections action = SearchMealsFragmentDirections.actionSearchFragmentToDetailsFragment(id);
             NavController controller = NavHostFragment.findNavController(this);
             controller.navigate(action);
         });
+        chipCategory.setOnClickListener(v -> presenter.loadCategories());
+        chipIngredient.setOnClickListener(v -> presenter.loadIngredients());
+        chipCountry.setOnClickListener(v -> presenter.loadCountries());
     }
     @Override
     public void updateMealsList(List<MealDto> meals) {
@@ -88,6 +98,36 @@ public class SearchMealsFragment extends Fragment implements SearchMealsView {
     public void displayError() {
         Toast.makeText(getContext(), "Failed to load meal", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void showFilterOptions(String title, List<?> options) {
+        List<String> displayList = new ArrayList<>();
+
+        for (Object option : options) {
+            if (option instanceof CategoryDto) {
+                displayList.add(((CategoryDto) option).getStrCategory());
+            } else if (option instanceof CountryDto) {
+                displayList.add(((CountryDto) option).getStrArea());
+            } else if (option instanceof IngredientDto) {
+                displayList.add(((IngredientDto) option).getStrIngredient());
+            }
+        }
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Choose " + title)
+                .setItems(displayList.toArray(new String[0]), (dialog, which) -> {
+                    String selected = displayList.get(which);
+                    switch (title) {
+                        case "Category": presenter.filterMealsByCategory(selected); break;
+                        case "Country": presenter.filterMealsByCountry(selected); break;
+                        case "Ingredient": presenter.filterMealsByIngredient(selected); break;
+                    }
+                })
+                .show();
+
+
+    }
+
     private void observeSearchEditText(SearchPresenter presenter) {
 
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -3,6 +3,9 @@ package com.aeinae.plateful.data.meals.repository;
 import android.app.Application;
 
 import com.aeinae.plateful.data.meals.datasource.local.LocalDataSource;
+import com.aeinae.plateful.data.meals.datasource.remote.CategoriesResponse;
+import com.aeinae.plateful.data.meals.datasource.remote.CountriesResponse;
+import com.aeinae.plateful.data.meals.datasource.remote.IngredientsResponse;
 import com.aeinae.plateful.data.meals.datasource.remote.MealsResponse;
 import com.aeinae.plateful.data.meals.datasource.remote.RemoteDataSource;
 import com.aeinae.plateful.data.meals.model.MealEntity;
@@ -42,5 +45,19 @@ public class MealsRepository {
     }
     public Completable deleteMeal(MealEntity meal){
         return lds.deleteMeal(meal);
+    }
+    public Single<MealsResponse> filterMealsByCategory(String mealCategory){return rds.filterMealsByCategory(mealCategory);}
+    public Single<MealsResponse> filterMealsByIngredients(String mealIngredients){return rds.filterMealsByIngredient(mealIngredients);}
+    public Single<MealsResponse> filterMealsByCountry(String mealCountry){return rds.filterMealsByCountry(mealCountry);}
+    public Single<CategoriesResponse> getAllCategories() {
+        return rds.getAllCategories();
+    }
+
+    public Single<CountriesResponse> getAllCountries() {
+        return rds.getAllCountries();
+    }
+
+    public Single<IngredientsResponse> getAllIngredients() {
+        return rds.getAllIngredients();
     }
 }

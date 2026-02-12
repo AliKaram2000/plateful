@@ -1,5 +1,8 @@
 package com.aeinae.plateful.network;
 
+import com.aeinae.plateful.data.meals.datasource.remote.CategoriesResponse;
+import com.aeinae.plateful.data.meals.datasource.remote.CountriesResponse;
+import com.aeinae.plateful.data.meals.datasource.remote.IngredientsResponse;
 import com.aeinae.plateful.data.meals.datasource.remote.MealsResponse;
 import com.aeinae.plateful.data.meals.model.MealDto;
 
@@ -22,4 +25,10 @@ public interface MealsService {
     Single<MealsResponse> filterMealsByIngredient(@Query("i") String mealIngredient);
     @GET("filter.php")
     Single<MealsResponse> filterMealsByCountry(@Query("a") String mealCountry);
+    @GET("list.php?c=list")
+    Single<CategoriesResponse> getAllCategories();
+    @GET("list.php?a=list")
+    Single<CountriesResponse> getAllCountries();
+    @GET("list.php?i=list")
+    Single<IngredientsResponse> getAllIngredients();
 }

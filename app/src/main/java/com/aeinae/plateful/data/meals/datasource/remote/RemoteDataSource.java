@@ -21,10 +21,21 @@ public class RemoteDataSource {
         return mealsService.filterMealsByCategory(mealCategory).onErrorReturnItem(new MealsResponse());
     }
     public Single<MealsResponse> filterMealsByIngredient(String mealIngredient){
-       return mealsService.filterMealsByCategory(mealIngredient).onErrorReturnItem(new MealsResponse());
+       return mealsService.filterMealsByIngredient(mealIngredient).onErrorReturnItem(new MealsResponse());
     }
     public Single<MealsResponse> filterMealsByCountry(String mealCountry){
-        return mealsService.filterMealsByCategory(mealCountry).onErrorReturnItem(new MealsResponse());
+        return mealsService.filterMealsByCountry(mealCountry).onErrorReturnItem(new MealsResponse());
+    }
+    public Single<CategoriesResponse> getAllCategories() {
+        return mealsService.getAllCategories().onErrorReturnItem(new CategoriesResponse());
+    }
+
+    public Single<CountriesResponse> getAllCountries() {
+        return mealsService.getAllCountries().onErrorReturnItem(new CountriesResponse());
+    }
+
+    public Single<IngredientsResponse> getAllIngredients() {
+        return mealsService.getAllIngredients().onErrorReturnItem(new IngredientsResponse());
     }
 
 }
