@@ -64,4 +64,9 @@ public class AuthenticationService {
                             });
         });
     }
+    public Single<Boolean> logout() {
+        return Single.create(emitter -> {
+            FirebaseAuth.getInstance().signOut();
+        });
+    }
 }

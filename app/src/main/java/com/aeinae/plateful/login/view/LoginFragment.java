@@ -20,7 +20,6 @@ import com.aeinae.plateful.MainActivity;
 import com.aeinae.plateful.R;
 import com.aeinae.plateful.login.presenter.LoginPresenter;
 import com.aeinae.plateful.login.presenter.LoginPresenterImp;
-import com.aeinae.plateful.login.presenter.LoginView;
 import com.aeinae.plateful.model.authentication.AuthenticationService;
 
 import io.reactivex.rxjava3.core.Single;

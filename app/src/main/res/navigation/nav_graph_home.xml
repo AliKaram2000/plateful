@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.aeinae.plateful.profile.ProfileFragment"
+        android:name="com.aeinae.plateful.profile.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment

@@ -31,7 +31,6 @@
             android:textSize="16sp"
             android:textStyle="bold"/>
 
-        <!-- Remove Favourite Icon -->
         <ImageView
             android:id="@+id/ic_removeFav"
             android:layout_width="32dp"

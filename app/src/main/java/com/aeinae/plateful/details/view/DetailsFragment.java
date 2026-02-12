@@ -29,7 +29,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 
 public class DetailsFragment extends Fragment implements DetailsView {
-
     DetailsPresenter presenter;
     TextView mealName;
     private ImageView mealImage;
@@ -38,20 +37,16 @@ public class DetailsFragment extends Fragment implements DetailsView {
     private LinearLayout ingredientsContainer;
     private TextView mealInstructions;
     private YouTubePlayerView youtubePlayerView;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_details, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,7 +56,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
         presenter.getMealDetails(Integer.parseInt(mealID));
         Log.e("KABSE", mealID);
     }
-
     @Override
     public void displayMealDetails(MealDto meal, List<String> ingredients, List<String> measures) {
         Glide.with(mealImage)
@@ -79,7 +73,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
             textView.setPadding(0, 4, 0, 4);
             ingredientsContainer.addView(textView);
         }
-
         youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
@@ -89,11 +82,9 @@ public class DetailsFragment extends Fragment implements DetailsView {
                 if (videoId != null) {
                     youTubePlayer.loadVideo(videoId, 0);
                 }
-
             }
         });
     }
-
     @Override
     public void onError() {
         //TODO: Fill placeHolders
@@ -114,7 +105,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
         if (url.contains("youtu.be/")) {
             return url.substring(url.lastIndexOf("/") + 1);
         }
-
         return null;
     }
     public void bindViews(View view){

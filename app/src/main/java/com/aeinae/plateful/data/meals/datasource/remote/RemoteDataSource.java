@@ -2,9 +2,7 @@ package com.aeinae.plateful.data.meals.datasource.remote;
 
 import com.aeinae.plateful.network.MealsService;
 import com.aeinae.plateful.network.RetrofitClient;
-
 import io.reactivex.rxjava3.core.Single;
-
 public class RemoteDataSource {
     MealsService mealsService;
     public RemoteDataSource() {
@@ -18,6 +16,15 @@ public class RemoteDataSource {
     }
     public Single<MealsResponse> getMealDetails(int mealID){
         return mealsService.getMealDetails(String.valueOf(mealID)).onErrorReturnItem(new MealsResponse());
+    }
+    public Single<MealsResponse> filterMealsByCategory(String mealCategory){
+        return mealsService.filterMealsByCategory(mealCategory).onErrorReturnItem(new MealsResponse());
+    }
+    public Single<MealsResponse> filterMealsByIngredient(String mealIngredient){
+       return mealsService.filterMealsByCategory(mealIngredient).onErrorReturnItem(new MealsResponse());
+    }
+    public Single<MealsResponse> filterMealsByCountry(String mealCountry){
+        return mealsService.filterMealsByCategory(mealCountry).onErrorReturnItem(new MealsResponse());
     }
 
 }

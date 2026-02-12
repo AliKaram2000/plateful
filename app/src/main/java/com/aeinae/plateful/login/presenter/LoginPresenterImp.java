@@ -2,6 +2,7 @@ package com.aeinae.plateful.login.presenter;
 
 import android.util.Patterns;
 
+import com.aeinae.plateful.login.view.LoginView;
 import com.aeinae.plateful.model.authentication.AuthenticationService;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

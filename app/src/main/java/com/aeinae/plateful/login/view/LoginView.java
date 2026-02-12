@@ -1,4 +1,4 @@
-package com.aeinae.plateful.login.presenter;
+package com.aeinae.plateful.login.view;
 
 import androidx.credentials.Credential;
 
