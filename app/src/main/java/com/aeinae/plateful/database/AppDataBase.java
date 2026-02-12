@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.aeinae.plateful.data.meals.model.MealEntity;
 import com.aeinae.plateful.data.meals.model.PlannedMealEntity;
 
-@Database(entities = {MealEntity.class, PlannedMealEntity.class}, version = 2)
+@Database(entities = {MealEntity.class, PlannedMealEntity.class}, version = 3)
 public abstract class AppDataBase extends RoomDatabase {
     private static final String DATABASE_NAME = "meals.db";
     private static volatile AppDataBase instance;

@@ -12,28 +12,28 @@ public class MealEntity {
     @NonNull
     @PrimaryKey
     private String id;
-    @NonNull
+   // @NonNull
     private String title;
-    @NonNull
+   // @NonNull
     private String category;
-    @NonNull
+  //  @NonNull
     private String country;
-    @NonNull
+   // @NonNull
     private String countryFlagUrl;
-    @NonNull
+   // @NonNull
     private String instructions;
-    @NonNull
+   // @NonNull
     private String thumbnail;
-    @NonNull
+   // @NonNull
     private String youtubeUrl;
     public MealEntity(@NonNull String id,
-                      @NonNull String title,
-                      @NonNull String category,
-                      @NonNull String country,
-                      @NonNull String countryFlagUrl,
-                      @NonNull String instructions,
-                      @NonNull String thumbnail,
-                      @NonNull String youtubeUrl)
+                       String title,
+                       String category,
+                       String country,
+                       String countryFlagUrl,
+                       String instructions,
+                       String thumbnail,
+                       String youtubeUrl)
     {
         this.id = id;
         this.title = title;
