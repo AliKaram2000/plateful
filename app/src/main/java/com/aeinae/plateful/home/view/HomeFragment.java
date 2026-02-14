@@ -23,13 +23,14 @@ import com.aeinae.plateful.home.presenter.HomePresenter;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Random;
 
 public class HomeFragment extends Fragment implements HomeView {
     private ImageView randomMealImg;
     private TextView randomMealTitle;
     private RecyclerView recyclerView;
     HomeMealsAdapter adapter;
-    private static final String ALL_MEALS = "a";
+    private static String ALL_MEALS = getRandomAlphabet();
 
 
     @Override
@@ -89,4 +90,10 @@ public class HomeFragment extends Fragment implements HomeView {
         randomMealTitle = view.findViewById(R.id.randomMealTitle);
         recyclerView = view.findViewById(R.id.recyclerViewHome);
     }
+    private static String getRandomAlphabet() {
+        Random random = new Random();
+        char randomChar = (char) ('A' + random.nextInt(26));
+        return String.valueOf(randomChar);
+    }
+
 }
