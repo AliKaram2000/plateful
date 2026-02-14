@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment implements HomeView {
     private RecyclerView recyclerView;
     HomeMealsAdapter adapter;
     private static String ALL_MEALS = getRandomAlphabet();
+    private OnHomeCardClick onHomeCardClick;
 
 
     @Override
@@ -60,7 +61,6 @@ public class HomeFragment extends Fragment implements HomeView {
                     "Meal added to Favorites: " + meal.getStrMeal(),
                     Toast.LENGTH_SHORT).show();
             presenter.insertFavoriteMeal(meal);
-
         });
         adapter.setOnHomeCardClickListener(id->{
             NavDirections action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(id);
@@ -74,6 +74,10 @@ public class HomeFragment extends Fragment implements HomeView {
         Glide.with(randomMealImg)
                 .load(mealDto.getStrMealThumb())
                 .into(randomMealImg);
+        randomMealImg.setOnClickListener(v->{
+            NavDirections action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(mealDto.getIdMeal());
+            NavHostFragment.findNavController(this).navigate(action);
+        });
     }
 
     @Override
