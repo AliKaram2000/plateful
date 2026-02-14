@@ -26,6 +26,7 @@ public class MealEntity {
     private String thumbnail;
    // @NonNull
     private String youtubeUrl;
+    private long date;
     public MealEntity(@NonNull String id,
                        String title,
                        String category,
@@ -44,4 +45,5 @@ public class MealEntity {
         this.thumbnail = thumbnail;
         this.youtubeUrl = youtubeUrl;
     }
+
 }

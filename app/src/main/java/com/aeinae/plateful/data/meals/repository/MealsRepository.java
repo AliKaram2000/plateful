@@ -9,6 +9,7 @@ import com.aeinae.plateful.data.meals.datasource.remote.IngredientsResponse;
 import com.aeinae.plateful.data.meals.datasource.remote.MealsResponse;
 import com.aeinae.plateful.data.meals.datasource.remote.RemoteDataSource;
 import com.aeinae.plateful.data.meals.model.MealEntity;
+import com.aeinae.plateful.data.meals.model.PlannedMealEntity;
 
 import java.util.List;
 
@@ -59,5 +60,14 @@ public class MealsRepository {
 
     public Single<IngredientsResponse> getAllIngredients() {
         return rds.getAllIngredients();
+    }
+    public Completable insertPlannedMeal(PlannedMealEntity meal){
+        return lds.insertPlannedMeal(meal);
+    }
+    public Completable removePlanedMeal(PlannedMealEntity meal){
+        return lds.removePlanedMeal(meal);
+    }
+    public Single<List<PlannedMealEntity>> getAllPlannedMeals(long date){
+        return lds.getAllPlannedMeals(date);
     }
 }

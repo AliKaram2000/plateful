@@ -10,33 +10,26 @@ import lombok.Data;
 @Entity(tableName = "planned_meal")
 public class PlannedMealEntity {
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private long plannedId;
     private String id;
-    @NonNull
     private String title;
-    @NonNull
     private String category;
-    @NonNull
     private String country;
-    @NonNull
     private String countryFlagUrl;
-    @NonNull
     private String instructions;
-    @NonNull
     private String thumbnail;
-    @NonNull
     private String youtubeUrl;
-    @NonNull
-    String date;
+    long date;
     public PlannedMealEntity(@NonNull String id,
-                      @NonNull String title,
-                      @NonNull String category,
-                      @NonNull String country,
-                      @NonNull String countryFlagUrl,
-                      @NonNull String instructions,
-                      @NonNull String thumbnail,
-                      @NonNull String youtubeUrl,
-                      @NonNull String date)
+                       String title,
+                       String category,
+                       String country,
+                       String countryFlagUrl,
+                       String instructions,
+                       String thumbnail,
+                       String youtubeUrl,
+                       long date)
     {
         this.id = id;
         this.title = title;

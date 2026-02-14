@@ -1,11 +1,11 @@
 package com.aeinae.plateful.details.view;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleObserver;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +23,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.Calendar;
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 
 public class DetailsFragment extends Fragment implements DetailsView {
@@ -37,6 +36,8 @@ public class DetailsFragment extends Fragment implements DetailsView {
     private LinearLayout ingredientsContainer;
     private TextView mealInstructions;
     private YouTubePlayerView youtubePlayerView;
+    private ImageView addPlannedIcon;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_details, container, false);
     }
     @Override
@@ -55,6 +55,7 @@ public class DetailsFragment extends Fragment implements DetailsView {
         String mealID = com.aeinae.plateful.details.view.DetailsFragmentArgs.fromBundle(getArguments()).getIdMeal();
         presenter.getMealDetails(Integer.parseInt(mealID));
         Log.e("KABSE", mealID);
+
     }
     @Override
     public void displayMealDetails(MealDto meal, List<String> ingredients, List<String> measures) {
@@ -65,20 +66,25 @@ public class DetailsFragment extends Fragment implements DetailsView {
         mealCategory.setText(meal.getStrCategory());
         mealOrigin.setText(meal.getStrArea());
         mealInstructions.setText(meal.getStrInstructions());
+        addPlannedIcon.setOnClickListener(v->{
+            addPlannedMeal(meal);
+        });
         ingredientsContainer.removeAllViews();
-        for (int i = 0; i < ingredients.size(); i++) {
+        int count = Math.min(ingredients.size(), measures.size());
+        for (int i = 0; i < count; i++) {
             TextView textView = new TextView(requireContext());
             textView.setText("• " + measures.get(i) + " " + ingredients.get(i));
             textView.setTextSize(16);
             textView.setPadding(0, 4, 0, 4);
             ingredientsContainer.addView(textView);
         }
+
         youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                 String videoUrl = meal.getStrYoutube();
                 String videoId = extractYoutubeId(videoUrl);
-                Log.d("Video ID:", videoId);
+//                Log.d("Video ID:", videoId);
                 if (videoId != null) {
                     youTubePlayer.loadVideo(videoId, 0);
                 }
@@ -91,17 +97,12 @@ public class DetailsFragment extends Fragment implements DetailsView {
     }
     private String extractYoutubeId(String url) {
         if (url == null || url.isEmpty()) return null;
-
-        // Standard YouTube link
         if (url.contains("v=")) {
             String[] parts = url.split("v=");
             String idPart = parts[1];
-            // strip any extra params like &t=30s
             int ampIndex = idPart.indexOf("&");
             return ampIndex != -1 ? idPart.substring(0, ampIndex) : idPart;
         }
-
-        // Short link
         if (url.contains("youtu.be/")) {
             return url.substring(url.lastIndexOf("/") + 1);
         }
@@ -116,5 +117,29 @@ public class DetailsFragment extends Fragment implements DetailsView {
         mealInstructions = view.findViewById(R.id.mealInstructions);
         youtubePlayerView = view.findViewById(R.id.youtubePlayer);
         getLifecycle().addObserver(youtubePlayerView);
+        addPlannedIcon = view.findViewById(R.id.ic_add_planned);
+    }
+    private void addPlannedMeal(MealDto meal){
+        Calendar now = Calendar.getInstance();
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                requireContext(),
+                (view, year, month, dayOfMonth) -> {
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(year, month, dayOfMonth, 0, 0, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+
+                    long selectedDay = cal.getTimeInMillis();
+
+                    presenter.insertPlannedMeal(meal, selectedDay);
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dialog.getDatePicker().setMinDate(System.currentTimeMillis());
+
+        dialog.show();
     }
 }

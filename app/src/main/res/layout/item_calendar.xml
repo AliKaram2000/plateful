@@ -32,10 +32,10 @@
             android:textStyle="bold"/>
 
         <ImageView
-            android:id="@+id/ic_removeFav"
+            android:id="@+id/ic_removePlanned"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_favorite"
+            android:src="@drawable/ic_remove_calendar"
             android:contentDescription="Remove from favourites"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

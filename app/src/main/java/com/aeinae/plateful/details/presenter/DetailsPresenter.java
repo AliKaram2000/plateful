@@ -2,14 +2,20 @@ package com.aeinae.plateful.details.presenter;
 
 import android.app.Application;
 
+import com.aeinae.plateful.data.meals.mapper.MealMapper;
+import com.aeinae.plateful.data.meals.mapper.PlannedMealMapper;
 import com.aeinae.plateful.data.meals.model.MealDto;
+import com.aeinae.plateful.data.meals.model.MealEntity;
+import com.aeinae.plateful.data.meals.model.PlannedMealEntity;
 import com.aeinae.plateful.data.meals.repository.MealsRepository;
 import com.aeinae.plateful.details.view.DetailsView;
+import com.aeinae.plateful.details.view.OnAddPlannedClickListener;
 import com.aeinae.plateful.utils.MealUtils;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -17,6 +23,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DetailsPresenter {
     MealsRepository repo;
     DetailsView detailsView;
+
+    public void setOnAddPlannedClickListener(OnAddPlannedClickListener onAddPlannedClickListener) {
+        this.onAddPlannedClickListener = onAddPlannedClickListener;
+    }
+
+    private OnAddPlannedClickListener onAddPlannedClickListener;
     public DetailsPresenter(DetailsView detailsView, Application application){
         this.detailsView = detailsView;
         repo = new MealsRepository(application);
@@ -41,4 +53,14 @@ public class DetailsPresenter {
         return repo.getMealDetails(Integer.parseInt(mealID))
                 .map(meals -> meals.getMeals().get(0));
     }*/
+    public void insertPlannedMeal(MealDto mealDto, long date){
+        insertMealsLocally(mealDto, date);
+    }
+    private void insertMealsLocally(MealDto mealDto, long date){
+        PlannedMealEntity plannedMeal = PlannedMealMapper.toEntity(mealDto, date);
+        repo.insertPlannedMeal(plannedMeal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 }

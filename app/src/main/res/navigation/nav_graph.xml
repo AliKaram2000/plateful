@@ -45,7 +45,7 @@
         tools:layout="@layout/activity_home" />
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.aeinae.plateful.calendar.CalendarFragment"
+        android:name="com.aeinae.plateful.calendar.view.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment
